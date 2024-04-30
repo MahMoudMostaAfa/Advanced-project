@@ -9,6 +9,9 @@ public class Course implements Discountable {
     }
 
     public void setRate(double rate) {
+        if (rate < 0 || rate > 5) {
+            throw new IllegalArgumentException("Rate must be between 0 and 5");
+        }
         this.rate = rate;
     }
 
@@ -16,7 +19,10 @@ public class Course implements Discountable {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(int discount) throws IllegalArgumentException {
+        if (discount < 0) {
+            throw new IllegalArgumentException("Discount cannot be negative");
+        }
         this.discount = discount;
     }
 
@@ -24,15 +30,21 @@ public class Course implements Discountable {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(String category) throws IllegalArgumentException {
+        if (category == null) {
+            throw new IllegalArgumentException("Category cannot be null");
+        }
         this.category = category;
     }
 
-    public double getPrice() {
+    public double getPrice()  {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(double price) throws IllegalArgumentException {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
         this.price = price;
     }
 
@@ -40,7 +52,10 @@ public class Course implements Discountable {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description) throws IllegalArgumentException {
+        if (description == null) {
+            throw new IllegalArgumentException("Description cannot be null");
+        }
         this.description = description;
     }
 
@@ -52,7 +67,16 @@ public class Course implements Discountable {
         return InstructorName;
     }
 
-    public void setInstructorName(String instructorName) {
+    public void setInstructorName(String instructorName) throws IllegalArgumentException {
+        if (instructorName == null) {
+            throw new IllegalArgumentException("InstructorName cannot be null");
+        }
+        for (int i = 0, len = instructorName.length(); i < len; i++) {
+            char ch = instructorName.charAt(i);
+            if(!Character.isLetter(ch)) {
+                throw new IllegalArgumentException("InstructorName contains invalid characters");
+            }
+        }
         InstructorName = instructorName;
     }
 
@@ -60,7 +84,10 @@ public class Course implements Discountable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
         this.name = name;
     }
 
@@ -68,7 +95,10 @@ public class Course implements Discountable {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id) throws IllegalArgumentException {
+        if (id == null) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
         this.id = id;
     }
 
@@ -76,11 +106,11 @@ public class Course implements Discountable {
         return Quizzes;
     }
 
-    public void addQuiz(Quiz quiz){
+    public void addQuiz(Quiz quiz) throws IllegalArgumentException {
         Quizzes.add(quiz);
     }
 
-    public void removeQuiz(Quiz quiz){
+    public void removeQuiz(Quiz quiz) throws IllegalArgumentException {
         Quizzes.remove(quiz);
     }
 
@@ -125,5 +155,9 @@ public class Course implements Discountable {
         this.totalEnrolled = 0;
         InstructorName = null;
         this.name = null;
+    }
+    public static void main(String arg[]){
+        Course c = new Course();
+        c.setInstructorName("6ore");
     }
 }
