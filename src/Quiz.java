@@ -7,7 +7,7 @@ private boolean isOptional ;
 private int totalPassed ;   
 private int allowedAttempts ; 
 
-	 public void setDuration  (int mins) throws IllegalArgumentException{
+	 public void setDuration  (int mins)  throws IllegalArgumentException {
 		 if (mins <= 0) {
 			 throw new IllegalArgumentException ("Duration must be a positive number");
 		 }
@@ -19,7 +19,7 @@ private int allowedAttempts ;
  
  
  
-	 public void setDifficulty  (String diff) throws IllegalArgumentException{
+	 public void setDifficulty  (String diff)  throws IllegalArgumentException{
 		 if (diff == null) {
 			 throw new IllegalArgumentException ("Difficulty cannot be null");
 		 }
@@ -39,19 +39,23 @@ private int allowedAttempts ;
  
  
  
-	 public void setOptionality (boolean opt) throws IllegalArgumentException {
-		 if (!opt || ! opt) {
+	 public void setOptionality (boolean opt)  throws IllegalArgumentException  {
+		 if (opt || ! opt) {
+			 isOptional = opt ;
+			 
+		 }
+		 else {
 			 throw new IllegalArgumentException ("Optionality must be a boolean");
 		 }
 		 
-		 isOptional = opt ;  
+		   
 	 }
 	 public boolean getOptionality () {
 		return isOptional ;  
 	 }
  
 	 
-	 public void setTotalPassed (int students) throws IllegalArgumentException{
+	 public void setTotalPassed (int students)  throws IllegalArgumentException {
 		 if (students < 0 ) {
 			 throw new IllegalArgumentException ("Number of students cannot be negative");
 		 }
@@ -84,4 +88,3 @@ private int allowedAttempts ;
 	 
 	 
  
-
