@@ -40,10 +40,10 @@ private int allowedAttempts ;
  
  
 	 public void setOptionality (boolean opt)  throws IllegalArgumentException  {
-		 if (opt || ! opt) {
-			 isOptional = opt ;
-			 
+		 if (opt || !opt) {
+			 isOptional = opt ;			 
 		 }
+		 
 		 else {
 			 throw new IllegalArgumentException ("Optionality must be a boolean");
 		 }
