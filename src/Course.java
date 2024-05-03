@@ -3,7 +3,19 @@ package com.example.demo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Course implements Discountable {
+public class Course implements Discountable, Comparable<Course> {
+
+    private String id;
+    ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
+    private String name;
+    private String InstructorName;
+    private int totalEnrolled;
+    private String description;
+    private double price;
+    private String category;
+    private int discount;
+    private double rate;
+
     public double getRate() {
         return rate;
     }
@@ -114,23 +126,17 @@ public class Course implements Discountable {
         Quizzes.remove(quiz);
     }
 
-    private String id;
-    ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
-    private String name;
-    private String InstructorName;
-    private int totalEnrolled;
-    private String description;
-    private double price;
-    private String category;
-    private int discount;
-    private double rate;
-
     public boolean isDiscountable(){
         return discount != 0;
     }
 
-    public void newEnrolled(){
+    public void newEnrolled() {
         totalEnrolled += 1;
+    }
+
+    @Override
+    public int compareTo(Course o) {
+        return this.id.compareTo(o.id);
     }
 
     public Course(String id, String category, String description, double price, String instructorName, String name) {
@@ -160,4 +166,5 @@ public class Course implements Discountable {
         Course c = new Course();
         c.setInstructorName("6ore");
     }
+
 }
