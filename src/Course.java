@@ -149,6 +149,8 @@ public class Course implements Discountable, Comparable<Course> {
         this.totalEnrolled = 0;
         InstructorName = instructorName;
         this.name = name;
+        Online_Course_Site.setLastReleasedCourses(this);
+        Online_Course_Site.incrementTotalCoursesnum();
     }
 
     public Course() {
@@ -161,6 +163,9 @@ public class Course implements Discountable, Comparable<Course> {
         this.totalEnrolled = 0;
         InstructorName = null;
         this.name = null;
+        Online_Course_Site.setLastReleasedCourses(this);
+        Online_Course_Site.incrementTotalCoursesnum();
+
     }
     public static void main(String arg[]){
         Course c = new Course();
