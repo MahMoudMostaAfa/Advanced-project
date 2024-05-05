@@ -1,12 +1,10 @@
-package com.example.demo;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Course implements Discountable, Comparable<Course> {
 
     private String id;
     ArrayList<Quiz> Quizzes = new ArrayList<Quiz>();
+    private  ArrayList<Student> course_students = new ArrayList<>();
     private String name;
     private String InstructorName;
     private int totalEnrolled;
@@ -130,8 +128,13 @@ public class Course implements Discountable, Comparable<Course> {
         return discount != 0;
     }
 
-    public void newEnrolled() {
+    public void newEnrolled(Student s) {
         totalEnrolled += 1;
+        course_students.add(s);
+    }
+    public void deletestudent(Student s) {
+        totalEnrolled -= 1;
+        course_students.remove(s);
     }
 
     @Override
@@ -149,7 +152,7 @@ public class Course implements Discountable, Comparable<Course> {
         this.totalEnrolled = 0;
         InstructorName = instructorName;
         this.name = name;
-        Online_Course_Site.setLastReleasedCourses(this);
+        Online_Course_Site.addnewcourse(this);
         Online_Course_Site.incrementTotalCoursesnum();
     }
 
@@ -163,13 +166,20 @@ public class Course implements Discountable, Comparable<Course> {
         this.totalEnrolled = 0;
         InstructorName = null;
         this.name = null;
-        Online_Course_Site.setLastReleasedCourses(this);
+        Online_Course_Site.addnewcourse(this);
         Online_Course_Site.incrementTotalCoursesnum();
 
     }
-    public static void main(String arg[]){
-        Course c = new Course();
-        c.setInstructorName("6ore");
+
+    public  ArrayList<Student> getCourse_students() {
+        return course_students;
     }
 
+    public void setCourse_students(ArrayList<Student> course_students) {
+        this.course_students = course_students;
+    }
+
+   
+
 }
+

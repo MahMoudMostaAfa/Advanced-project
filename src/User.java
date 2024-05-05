@@ -12,7 +12,7 @@ public abstract class  User {
     private String country ;
     Date joinedAt ;
     public User(){
-
+Online_Course_Site.incrementTotalUsersnum();
     }
     public User(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) {
         this.firstName = firstName;
@@ -25,6 +25,7 @@ public abstract class  User {
         this.country = country;
         this.joinedAt = new Date();
         this.id = new Date().toString();
+        Online_Course_Site.incrementTotalUsersnum();
     }
 
     public String getFirstName() {

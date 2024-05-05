@@ -11,6 +11,7 @@ public class Lecturer extends User {
 
     public Lecturer(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) {
         super(firstName, lastName, email, password, phone, image, gender, country);
+        Online_Course_Site.addLecturer(this);
     }
 
     public ArrayList<Course> getCourses() {
