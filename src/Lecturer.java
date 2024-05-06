@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
 public class Lecturer extends User {
-    private ArrayList<Course> courses ;
-    private int totalStudent ;
+    private ArrayList<Course> courses;
+    private int totalStudent;
     private double balance;
 
 
@@ -15,10 +15,14 @@ public class Lecturer extends User {
     }
 
     public ArrayList<Course> getCourses() {
+
         return courses;
+
+
     }
 
     public void setCourses(ArrayList<Course> courses) {
+
         this.courses = courses;
     }
 
@@ -27,7 +31,11 @@ public class Lecturer extends User {
     }
 
     public void setTotalStudent(int totalStudent) {
-        this.totalStudent = totalStudent;
+        if (totalStudent < 0)
+            throw new IllegalArgumentException("try again.(Negative Numbers are not Accepted)")
+        else
+            this.totalStudent = totalStudent;
+
     }
 
     public double getBalance() {
@@ -35,13 +43,20 @@ public class Lecturer extends User {
     }
 
     public void setBalance(double balance) {
-        this.balance = balance;
+        if (balance < 0)
+            throw new IllegalArgumentException("try again.(Negative Numbers are not Accepted)");
+        else
+            this.balance=balance;
     }
-     public  void withDrawMoney(  double value){
-        if(this.balance < value ) return;
-        this.balance-= value;
-     }
-     public void  publicCourse( Course course){
+
+    public void withDrawMoney(double value) {
+        if (this.balance < value) {
+             System.out.println("Insufficient Funds");
+        } else
+            this.balance -= value;
+    }
+
+    public void publicCourse(Course course) {
         this.courses.add(course);
-     }
+    }
 }
