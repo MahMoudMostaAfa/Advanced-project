@@ -37,7 +37,6 @@ public class Course implements Discountable, Comparable<Course> {
         this.quizzes=new ArrayList<Quiz>();
 
         Online_Course_Site.addNewCourse(this);
-        Online_Course_Site.incrementTotalCoursesnum();
     }
 
 

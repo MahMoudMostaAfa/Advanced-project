@@ -17,7 +17,7 @@ public class Lecturer extends User {
 
     public Lecturer(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) {
         super(firstName, lastName, email, password, phone, image, gender, country);
-        Online_Course_Site.addLecturer(this);
+        Online_Course_Site.addNewLecturer(this);
     }
     @Override
     public void displayInfo() {
@@ -67,6 +67,7 @@ public class Lecturer extends User {
         String instructorName=this.getFirstName()+" "+this.getLastName() ;
         Course course= new Course(name,description,price,instructorName,category);
         this.courses.add(course);
+
     }
 
     // function that return certain lecturer by passing its name

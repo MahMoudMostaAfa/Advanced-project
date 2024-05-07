@@ -20,8 +20,7 @@ public class Student extends User {
     public Student(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) 
     {
         super(firstName, lastName, email, password, phone, image, gender, country);
-        Online_Course_Site.addStudent(this);
-        Online_Course_Site.incrementTotalUsersnum();
+        Online_Course_Site.addNewStudent(this);;
         enrolledCourses=new ArrayList<Course>();
         wishList=new ArrayList<Course>();
         finsihedCourse=new ArrayList<Course>();
