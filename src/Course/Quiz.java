@@ -1,3 +1,4 @@
+package Course;
 
 public class Quiz {
 	
@@ -78,11 +79,11 @@ private int allowedAttempts ;
 	 
 	 
 	 public void displayInfo() {
-		 System.out.println("Quiz Duration : " + durationMinutes  );
-		 System.out.println("Quiz Difficulty : " + difficulty  );
+		 System.out.println("Course.Quiz Duration : " + durationMinutes  );
+		 System.out.println("Course.Quiz Difficulty : " + difficulty  );
 		 System.out.println("Total Attempts Allowed : " + allowedAttempts  );
-		 System.out.println("Is The Quiz Optional : " + isOptional  );
-		 System.out.println("Total Student Passed The Quiz : " + totalPassed  );
+		 System.out.println("Is The Course.Quiz Optional : " + isOptional  );
+		 System.out.println("Total User.Student Passed The Course.Quiz : " + totalPassed  );
 	 }
 }
 	 

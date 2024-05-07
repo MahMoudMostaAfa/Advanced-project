@@ -1,3 +1,8 @@
+package User;
+
+import Main.Online_Course_Site;
+import Utils.Validator;
+
 import java.util.Date;
 
 public abstract class  User {
@@ -10,11 +15,23 @@ public abstract class  User {
     private String image ;
     private boolean gender ;
     private String country ;
+
+    public Date getJoinedAt() {
+        return joinedAt;
+    }
+
     Date joinedAt ;
     public User(){
-Online_Course_Site.incrementTotalUsersnum();
     }
-    public User(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) {
+    public User(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) throws IllegalArgumentException {
+        if (!Validator.isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format: " + email);
+        }
+        if (!Validator.isValidPassword(password)) {
+            throw new IllegalArgumentException("Invalid password format: " + password);
+        }
+        if( firstName==null || lastName ==null || email==null || password==null )  throw new IllegalArgumentException("name ,email and password is required  ");
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -25,7 +42,6 @@ Online_Course_Site.incrementTotalUsersnum();
         this.country = country;
         this.joinedAt = new Date();
         this.id = new Date().toString();
-        Online_Course_Site.incrementTotalUsersnum();
     }
 
     public String getFirstName() {
@@ -48,7 +64,11 @@ Online_Course_Site.incrementTotalUsersnum();
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws IllegalArgumentException  {
+        if (!Validator.isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format: " + email);
+        }
+
         this.email = email;
     }
 
@@ -56,7 +76,8 @@ Online_Course_Site.incrementTotalUsersnum();
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password) throws IllegalArgumentException {
+        if(!Validator.isValidPassword(password)) throw  new IllegalArgumentException("Invalid password format: " + password);
         this.password = password;
     }
 
@@ -91,4 +112,7 @@ Online_Course_Site.incrementTotalUsersnum();
     public void setCountry(String country) {
         this.country = country;
     }
+    public abstract void displayInfo();
+
+
 }
