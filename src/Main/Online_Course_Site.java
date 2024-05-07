@@ -68,6 +68,7 @@ public class Online_Course_Site {
      {
          students.remove(student);
          totalUsersNum--;
+         // delete student from students array in StudentObject
      }
     public static void  deleteLecturer(Lecturer lecturer )
     {
