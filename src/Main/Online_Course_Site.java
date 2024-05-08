@@ -64,9 +64,9 @@ public class Online_Course_Site {
         totalUsersNum--;
 
         students.remove(user);
-        user.deletestudentcourses();
+        student.deletestudentcourses();
 
-        user = null;
+        student = null;
     }
 
     public static void deleteLecturer(Lecturer lecturer) {

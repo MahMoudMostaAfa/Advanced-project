@@ -88,7 +88,7 @@ public class Student extends User {
       
              for (int i = 0; i < enrolledCourses.size(); i++)
              {
-                   enrolledCourses.get(i).deletestudent(this);
+                   enrolledCourses.get(i).newWithDraw(this);
                   
              }
     }
