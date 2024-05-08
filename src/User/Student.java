@@ -83,7 +83,15 @@ public class Student extends User {
         this.wishList.add(course);
     }
     
-
+    public  void deletestudentcourses()
+    {
+      
+             for (int i = 0; i < enrolledCourses.size(); i++)
+             {
+                   enrolledCourses.get(i).deletestudent(this);
+                  
+             }
+    }
 
 
 }
