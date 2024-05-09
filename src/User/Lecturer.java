@@ -1,8 +1,8 @@
-package User;
+package com.example.oopjavafx.User;
 
-import Course.Course;
-import Main.Online_Course_Site;
-import User.User;
+
+import com.example.oopjavafx.Course.Course;
+import com.example.oopjavafx.Main.Online_Course_Site;
 
 import java.util.ArrayList;
 

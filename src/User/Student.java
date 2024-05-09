@@ -1,9 +1,8 @@
-package User;
+package com.example.oopjavafx.User;
 
-import Course.Course;
-import Main.Online_Course_Site;
-import User.User;
-import Utils.Validator;
+
+import com.example.oopjavafx.Course.Course;
+import com.example.oopjavafx.Main.Online_Course_Site;
 
 import java.util.ArrayList;
 
@@ -83,15 +82,7 @@ public class Student extends User {
         this.wishList.add(course);
     }
     
-    public  void deletestudentcourses()
-    {
-      
-             for (int i = 0; i < enrolledCourses.size(); i++)
-             {
-                   enrolledCourses.get(i).newWithDraw(this);
-                  
-             }
-    }
+
 
 
 }

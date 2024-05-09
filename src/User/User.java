@@ -1,7 +1,7 @@
-package User;
+package com.example.oopjavafx.User;
 
-import Main.Online_Course_Site;
-import Utils.Validator;
+
+import com.example.oopjavafx.Utils.Validator;
 
 import java.util.Date;
 

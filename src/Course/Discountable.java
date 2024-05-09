@@ -1,4 +1,4 @@
-package Course;
+package com.example.oopjavafx.Course;
 
 public interface Discountable {
 		

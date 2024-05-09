@@ -1,8 +1,8 @@
-package Course;
+package com.example.oopjavafx.Course;
 
-import Main.Online_Course_Site;
-import User.Lecturer;
-import User.Student;
+import com.example.oopjavafx.Main.Online_Course_Site;
+import com.example.oopjavafx.User.Lecturer;
+import com.example.oopjavafx.User.Student;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +41,7 @@ public class Course implements Discountable, Comparable<Course> {
 
 
     public double getRate() {
+
         return rate;
     }
 
@@ -48,7 +49,7 @@ public class Course implements Discountable, Comparable<Course> {
         if (rate < 0 || rate > 5) {
             throw new IllegalArgumentException("Rate must be between 0 and 5");
         }
-        this.rate = rate;
+        this.rate = (this.rate+rate)/totalEnrolled;
     }
 
     public int getDiscount() {
@@ -151,8 +152,12 @@ public class Course implements Discountable, Comparable<Course> {
     }
 
     @Override
-    public int compareTo(Course o) {
-        return this.id.compareTo(o.id);
+    public int compareTo(Course co) {
+
+        if(this.price > co.price) return 1 ;
+        else if(this.price < co.price) return -1 ;
+        else  return 0;
+
     }
 
 
