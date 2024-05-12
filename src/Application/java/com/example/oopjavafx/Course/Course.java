@@ -35,7 +35,6 @@ public class Course implements Discountable, Comparable<Course> {
         this.id = new Date().toString();
         this.courseStudents = new ArrayList<Student>();
         this.quizzes=new ArrayList<Quiz>();
-
         Online_Course_Site.addNewCourse(this);
     }
 

@@ -1,11 +1,14 @@
 package com.example.oopjavafx;
 
+import com.example.oopjavafx.Course.Course;
 import com.example.oopjavafx.Main.Online_Course_Site;
 import com.example.oopjavafx.User.Lecturer;
 import com.example.oopjavafx.User.Student;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -15,10 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -29,13 +29,19 @@ import java.io.File;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
     Stage primaryStage ;
     String imagePath = null;
 
     @Override
     public void start(Stage stage) throws IOException {
         // initial student account
-        Online_Course_Site.addNewStudent(new Student("mahmoud","mostafa","mahmoud2030m@gmail.com","@#$1245Mnss","012441233","dsee2",true,"eg"));
+        Online_Course_Site.addNewStudent(new Student("mahmoud","mostafa","mahmoud2030m@gmail.com","@#$1245Mnss","012441233","\\Users\\asd\\Pictures\\Screenshots\\Screenshot 2024-05-12 131129.png",true,"eg"));
+
+        Online_Course_Site.addNewLecturer(new Lecturer("asfcdhgv","dewahg","abdo@gmail.com","1#$@45Ab","011","eywg",true,"co"));
+        Online_Course_Site.getLecturers().get(0).publicCourse("AVR","AVRasnf aksbfkasbfkjabsfkabsfkabsf",50,"hsga");
+        Online_Course_Site.addNewStudent(new Student("Omar", "Tamer", "omar@gmail.com", "Omar@000", "01111","eywg",true, "egypt" ));
+        Online_Course_Site.getLecturers().get(0).publicCourse("tech","AVRasjfnakjvbadbvkadbvkbadkvabv",50,"hsga");
 
         this.primaryStage=stage;
         // initial login scene
@@ -99,13 +105,18 @@ private Scene logInScene() {
                 if(userType.equals("Student")){
                     Online_Course_Site.logInAsStudent(username,password);
                     System.out.println("logged as student");
-                    this.primaryStage.setScene(editScene());
+
+                    this.primaryStage.setScene(mainAppForStudentScene());
+                    this.primaryStage.setFullScreen(true);
+
 
                 }
                 else if (userType.equals("Lecturer") ){
                     Online_Course_Site.logInAsLecturer(username,password);
+
                     System.out.println("logged as lecturer");
                     this.primaryStage.setScene(mainAppForLecturerScene());
+                    this.primaryStage.setFullScreen(true);
                 }
 
                 // Change the scene accordingly
@@ -277,16 +288,172 @@ private Scene logInScene() {
         return  scene ;
     }
     private Scene mainAppForStudentScene(){
+        Student student= (Student)Online_Course_Site.getLoginUser() ;
         this.primaryStage.setTitle("ONLINE COURSE SITE");
 
-        //// YOUR CODE AND LOGIC
-        GridPane pane  =new GridPane();
+        BorderPane root = new BorderPane();
+        TextField charge = new TextField();
+        charge.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    charge.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        Label alert = new Label();
+        // Labels for student name and balance
+        Label nameLabel = new Label("Name: " + student.getFirstName() + " " + student.getLastName());
+        nameLabel.setTextFill(Color.WHITE);
+        Label balanceLabel = new Label("Balance: $" + student.getWallet());
+        balanceLabel.setTextFill(Color.WHITE);
+        Button chargebalance = new Button("✅");
+        chargebalance.setOnAction(e-> {
+            try {
+                student.addToWallet(Integer.parseInt(charge.getText()));
+            }catch (Exception ex){
+                alert.setText(ex.getMessage());
+                alert.setTextFill(Color.RED);
+            }
+
+            charge.clear();
+            balanceLabel.setText("Balance: $" + student.getWallet());
+        });
+
+        // List views for registered, finished, and available courses
+        ListView<String> registeredCoursesListView = new ListView<>();
 
 
 
 
-        return new Scene(pane,200,200);
+        for (Course course : student.getEnrolledCourses()){
+            registeredCoursesListView.getItems().addAll( course.getName() +"lecturer name :"+ course.getInstructorName() +" course price :" + course.getPrice()  );
+        }
+
+
+        ListView<String> finishedCoursesListView = new ListView<>();
+        for (Course course : student.getFinsihedCourse()){
+            registeredCoursesListView.getItems().addAll( course.getName() +"lecturer name :"+ course.getInstructorName() +" course price :" + course.getPrice()  );
+        }
+
+        ListView<String> availableCoursesListView = new ListView<>();
+
+        for (Course course : Online_Course_Site.getCourses()){
+            availableCoursesListView.getItems().addAll( "course name: "+ course.getName() +"lecturer name : "+ course.getInstructorName() +" course price : " + course.getPrice()  );
+        }
+        availableCoursesListView.setCellFactory(param -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setPrefWidth(200); // Set custom width for cell
+                }
+            }
+        });
+        // Buttons for actions
+        Button withdrawButton = new Button("Withdraw");
+        Button registerButton = new Button("Register");
+        Button logoutButton = new Button("Logout");
+        Button editButton = new Button("Edit");
+        withdrawButton.setVisible(false);
+        registerButton.setVisible(false);
+//        Image profile = new Image(Online_Course_Site.loginUser.getImage());
+//        ImageView profileImageView = new ImageView(profile);
+//        profileImageView.setFitHeight(50);
+//        profileImageView.setFitWidth(50);
+        charge.setPrefSize(70,30);
+        chargebalance.setPrefSize(60,30);
+        editButton.setOnAction((e)->{
+            this.primaryStage.setScene(editScene());
+        });
+
+        logoutButton.setOnAction((e)->{
+            this.primaryStage.setScene(logInScene());
+    Online_Course_Site.logOut();
+} );
+        // Horizontal box for buttons
+        HBox buttonsBox = new HBox(10 ,withdrawButton, registerButton, editButton, logoutButton);
+        buttonsBox.setPadding(new Insets(10));
+        HBox full = new HBox(10);
+        HBox Balance = new HBox(10);
+        Balance.getChildren().addAll(charge, chargebalance);
+        HBox info = new HBox(10, new VBox(5, nameLabel, balanceLabel, Balance,alert));
+        info.setAlignment(Pos.CENTER);
+//        full.getChildren().addAll(profileImageView, info);
+        full.getChildren().addAll( info);
+        full.setPadding(new Insets(20));
+        full.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        root.setLeft(full);
+        root.setRight(buttonsBox);
+
+
+        // getting buttons to appear when a course is clicked
+        // Registering event handlers for ListView selection changes
+        registeredCoursesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // Show withdraw button when a registered course is selected
+                withdrawButton.setVisible(newValue != null);
+                if (registerButton.isVisible()) {
+                    registerButton.setVisible(false);
+                }
+
+            }
+
+        });
+
+        availableCoursesListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                // Show register button when an available course is selected
+                registerButton.setVisible(newValue != null);
+                if (withdrawButton.isVisible()) {
+                    withdrawButton.setVisible(false);
+                }
+            }
+        });
+
+        //Buttons action
+        withdrawButton.setOnAction(e -> {
+            String drawn = registeredCoursesListView.getSelectionModel().getSelectedItem();
+            registeredCoursesListView.getItems().remove(registeredCoursesListView.getSelectionModel().getSelectedIndex());
+            // search for drawn and delete it in enrolled courses
+
+            availableCoursesListView.getItems().add(drawn);
+            registeredCoursesListView.getSelectionModel().clearSelection();
+            withdrawButton.setVisible(false);
+        });
+
+        registerButton.setOnAction(e->{
+            String registered = availableCoursesListView.getSelectionModel().getSelectedItem();
+            availableCoursesListView.getItems().remove(availableCoursesListView.getSelectionModel().getSelectedIndex());
+            registeredCoursesListView.getItems().add(registered);
+            availableCoursesListView.getSelectionModel().clearSelection();
+            registerButton.setVisible(false);
+        });
+
+
+        VBox fullcourses = new VBox(10);
+        fullcourses.setPadding(new Insets(10));
+        fullcourses.getChildren().addAll(
+                new Label("Registered Courses"),
+                registeredCoursesListView, new Label("Finished Courses")
+                , finishedCoursesListView, new Label("Available Courses")
+                , availableCoursesListView);
+
+        root.setCenter(fullcourses);
+        // Create scene and set it on stage
+        Scene scene = new Scene(root, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+        logoutButton.getStyleClass().add("info");
+        return  scene;
     }
+    
     private Scene mainAppForLecturerScene(){
         this.primaryStage.setTitle("ONLINE COURSE SITE");
 
@@ -325,6 +492,8 @@ private Scene logInScene() {
          saveButton = new Button("Save Changes");
          deleteButton = new Button("Delete Account");
          deleteButton.setStyle("-fx-background-color:red ");
+         Label errorlabel = new Label();
+
 
          VBox layout = new VBox(10);
          layout.getChildren().add(currentEmailLabel);
@@ -337,20 +506,20 @@ private Scene logInScene() {
          layout.getChildren().add(newPasswordField);
          layout.getChildren().add(confirmPasswordLabel);
          layout.getChildren().add(confirmPasswordField);
+         layout.getChildren().add(errorlabel);
          layout.getChildren().add(saveButton);
          layout.getChildren().add(deleteButton);
          layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
 
+
          // Add button action listeners
          saveButton.setOnAction(event -> {
              // Implement validation and update logic for saving changes
              if(!currentPasswordField.getText().equals(Online_Course_Site.loginUser.getPassword()) ){
-                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                 alert.setTitle("Error");
-                 alert.setHeaderText("current password is in correct");
-                 alert.setContentText("Please write it well");
-                 alert.showAndWait();
+
+                 errorlabel.setText("Error : current password is in correct");
+                 errorlabel.setTextFill(Color.RED);
 
              }
 
@@ -362,18 +531,15 @@ private Scene logInScene() {
                      Online_Course_Site.loginUser.setEmail(newEmailField.getText());
                      Online_Course_Site.loginUser.setPassword(newPasswordField.getText());
 
+                     Online_Course_Site.logOut();
                       this.primaryStage.setScene(logInScene());
 
 
 
                  }catch(IllegalArgumentException e) {
-                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                     alert.setTitle("Error");
-                     alert.setHeaderText(" Invalid Email or Password");
-                     alert.setContentText("Please ensure the new password are strong contains(capital,small Caracters ,numbers , special signs #,$)"
-                             + "and the email are valid");
 
-                     alert.showAndWait();
+                     errorlabel.setText("Error : Invalid Email or Password");
+                     errorlabel.setTextFill(Color.RED);
 
                  }
 
@@ -381,11 +547,10 @@ private Scene logInScene() {
 
              }
              else {
-                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                 alert.setTitle("Error");
-                 alert.setHeaderText("Passwords Don't Match");
-                 alert.setContentText("Please ensure the new password and confirm password fields are identical.");
-                 alert.showAndWait();
+
+                 errorlabel.setText("Error : Passwords Don't Match make sure the two passwords are the same");
+                 errorlabel.setTextFill(Color.RED);
+
              }
 
          });
@@ -399,8 +564,8 @@ private Scene logInScene() {
              alert.showAndWait();
 
              if (alert.getResult() == ButtonType.OK) {
-                 Online_Course_Site.deleteStudent((Student) Online_Course_Site.getLoginUser());// put the student
-
+                 if(Online_Course_Site.getLoginUser() instanceof  Student)  Online_Course_Site.deleteStudent((Student) Online_Course_Site.getLoginUser());
+                 else  Online_Course_Site.deleteLecturer((Lecturer) Online_Course_Site.getLoginUser());
                  this.primaryStage.setScene(logInScene());
 
              }
@@ -429,6 +594,8 @@ private Scene logInScene() {
            }
        } );
     }
+
+
 
     public static void main(String[] args) {
         launch();

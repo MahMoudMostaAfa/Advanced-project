@@ -15,7 +15,12 @@ public class Online_Course_Site {
     private static int totalCourseNum;
    private static ArrayList<Student> students = new ArrayList<Student>();
    private static ArrayList<Lecturer> lecturers = new ArrayList<Lecturer>();
-   private static ArrayList<Course> courses = new ArrayList<Course>();
+
+    public static ArrayList<Course> getCourses() {
+        return courses;
+    }
+
+    private static ArrayList<Course> courses = new ArrayList<Course>();
 
    private static Queue<Course> lastReleasedCourses = new LinkedList<Course>();
 
@@ -81,6 +86,7 @@ public class Online_Course_Site {
     public static void  deleteLecturer(Lecturer lecturer )
     {
         lecturers.remove(lecturer);
+        lecturer=null;
         totalUsersNum--;
     }
 

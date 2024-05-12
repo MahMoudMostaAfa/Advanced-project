@@ -1,0 +1,79 @@
+/* styles.css */
+
+.root {
+    -fx-background-color: #f0f0f0;
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444;
+    -fx-font-weight: bold;
+}
+
+.text-field, .password-field {
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #999;
+    -fx-background-color: #fff; /* White background for text fields */
+    -fx-border-color: #ccc; /* Light gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+}
+
+.choice-box {
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #fff;
+    -fx-background-color: #007bff;
+    -fx-padding: 8px 16px;
+    -fx-border-radius: 4px;
+}
+
+.button:hover {
+    -fx-background-color: #0056b3;
+}
+
+.error-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ff0000;
+}
+
+.info{
+    -fx-background-color: red;
+}
+/*
+////////////////////////////////////////////////
+*/
+
+.alert-dialog {
+    -fx-background-color: #f0f0f0; /* Background color */
+}
+
+.alert-header {
+    -fx-background-color: #007bff; /* Header background color */
+    -fx-text-fill: white; /* Header text color */
+}
+
+.alert-content {
+    -fx-font-size: 14px; /* Font size */
+    -fx-text-fill: #444; /* Text color */
+}
+
+.alert-button-bar {
+    -fx-background-color: #f0f0f0; /* Button bar background color */
+}
+
+.alert-button {
+    -fx-font-size: 14px; /* Font size */
+    -fx-text-fill: #007bff; /* Button text color */
+    -fx-background-color: white; /* Button background color */
+    -fx-border-color: #007bff; /* Button border color */
+    -fx-border-width: 1px; /* Button border width */
+}
+
+.alert-button:hover {
+    -fx-background-color: #007bff; /* Button background color on hover */
+    -fx-text-fill: white; /* Button text color on hover */
+}
