@@ -17,7 +17,7 @@ public class Lecturer extends User {
 
     public Lecturer(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) {
         super(firstName, lastName, email, password, phone, image, gender, country);
-        Online_Course_Site.addNewLecturer(this);
+        courses =new ArrayList<Course>();
     }
     @Override
     public void displayInfo() {
@@ -26,6 +26,8 @@ public class Lecturer extends User {
         System.out.println("lecturer balance is "+getBalance() );
         System.out.println("User.Lecturer totalCourses is "+ courses.size() );
         System.out.println("lecturer joined at "+getJoinedAt() );
+        System.out.println("User.lecture gender "+getGender());
+        System.out.println("user.lecturer image" + getImage());
 
     }
 

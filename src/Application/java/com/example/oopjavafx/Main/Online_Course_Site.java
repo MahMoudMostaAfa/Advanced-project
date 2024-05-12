@@ -18,7 +18,12 @@ public class Online_Course_Site {
    private static ArrayList<Course> courses = new ArrayList<Course>();
 
    private static Queue<Course> lastReleasedCourses = new LinkedList<Course>();
-   public static User loginUser;
+
+    public static User getLoginUser() {
+        return loginUser;
+    }
+
+    public static User loginUser;
    private  static  boolean  logged =false;
 
     public static int getTotalUsersnum() {
@@ -66,14 +71,10 @@ public class Online_Course_Site {
     }
 
 
-     public static void  deleteStudent(String id )
-     {  int indx ;
-         for (Student S : students ){
-             if(S.getId().equals(id)){
-                 System.out.println("yes");
-                 students.remove(S);
-             }
-         }
+     public static void  deleteStudent(Student s)
+     {
+         students.remove(s);
+         s=null;
          totalUsersNum--;
          // delete student from students array in StudentObject
      }

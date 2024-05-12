@@ -101,7 +101,7 @@ public abstract class  User {
         this.image = image;
     }
 
-    public boolean isGender() {
+    public boolean getGender() {
         return gender;
     }
 
@@ -112,7 +112,6 @@ public abstract class  User {
     public String getCountry() {
         return country;
     }
-
     public void setCountry(String country) {
         this.country = country;
     }

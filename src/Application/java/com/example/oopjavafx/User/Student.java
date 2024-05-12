@@ -19,7 +19,7 @@ public class Student extends User {
     public Student(String firstName, String lastName, String email, String password, String phone, String image, boolean gender, String country) 
     {
         super(firstName, lastName, email, password, phone, image, gender, country);
-        Online_Course_Site.addNewStudent(this);;
+        //Online_Course_Site.addNewStudent(this);;
         enrolledCourses=new ArrayList<Course>();
         wishList=new ArrayList<Course>();
         finsihedCourse=new ArrayList<Course>();
@@ -33,6 +33,8 @@ public class Student extends User {
         System.out.println("User.Student totalCourses is "+ enrolledCourses.size() );
         System.out.println("User.Student wishList courses is "+ wishList.size());
         System.out.println("User.Student joined at "+getJoinedAt() );
+        System.out.println("User.Student gender "+getGender());
+        System.out.println("user.student image" + getImage());
 
     }
 

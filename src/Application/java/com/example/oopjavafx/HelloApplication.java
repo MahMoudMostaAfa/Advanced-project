@@ -1,6 +1,7 @@
 package com.example.oopjavafx;
 
 import com.example.oopjavafx.Main.Online_Course_Site;
+import com.example.oopjavafx.User.Lecturer;
 import com.example.oopjavafx.User.Student;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
@@ -13,19 +14,23 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
+import java.io.File;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
     Stage primaryStage ;
+    String imagePath = null;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -42,6 +47,7 @@ public class HelloApplication extends Application {
 
 
 private Scene logInScene() {
+
     this.primaryStage.setTitle("Login");
     VBox container = new VBox(10); // VBox to hold all elements vertically
     container.setPadding(new Insets(20));
@@ -94,7 +100,7 @@ private Scene logInScene() {
                     Online_Course_Site.logInAsStudent(username,password);
                     System.out.println("logged as student");
                     this.primaryStage.setScene(editScene());
-                    Online_Course_Site.loginUser.displayInfo();
+
                 }
                 else if (userType.equals("Lecturer") ){
                     Online_Course_Site.logInAsLecturer(username,password);
@@ -145,15 +151,130 @@ private Scene logInScene() {
 }
 
     private Scene signUpScene(){
-        this.primaryStage.setTitle("ONLINE COURSE SITE");
-
-        //// YOUR CODE AND LOGIC
-        GridPane pane  =new GridPane();
-
+        this.primaryStage.setTitle("Signup");
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(20.0));
 
 
+        gridPane.setHgap(10.0);
+        gridPane.setVgap(10.0);
 
-        return new Scene(pane,200,200);
+
+        Label firstNameLabel = new Label("First Name:");
+        TextField firstNameField = new TextField();
+
+        gridPane.add(firstNameLabel, 0, 0);
+        gridPane.add(firstNameField, 1, 0);
+
+        Label lastNameLabel = new Label("Last Name:");
+        TextField lastNameField = new TextField();
+
+        gridPane.add(lastNameLabel, 0, 1);
+        gridPane.add(lastNameField, 1, 1);
+
+        Label genderLabel = new Label("Gender:");
+        ToggleGroup genderToggleGroup = new ToggleGroup();
+        RadioButton maleRadioButton = new RadioButton("Male");
+        maleRadioButton.setToggleGroup(genderToggleGroup);
+        RadioButton femaleRadioButton = new RadioButton("Female");
+        femaleRadioButton.setToggleGroup(genderToggleGroup);
+        maleRadioButton.setSelected(true);
+        gridPane.add(genderLabel, 0, 2);
+        gridPane.add(maleRadioButton, 1, 2);
+        gridPane.add(femaleRadioButton, 2, 2);
+        Label phoneLabel = new Label("Phone:");
+        TextField phoneField = new TextField();
+        gridPane.add(phoneLabel, 0, 3);
+        gridPane.add(phoneField, 1, 3);
+
+        Label countryLabel = new Label("Country:");
+        TextField countryField = new TextField();
+        gridPane.add(countryLabel, 0, 4);
+        gridPane.add(countryField, 1, 4);
+
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(50.0);
+        imageView.setFitWidth(50.0);
+
+        Button imageButton = new Button("Select Image");
+        imageButton.setOnAction((event) -> {
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(primaryStage);
+            if (file != null) {
+                Image image = new Image(file.toURI().toString());
+                imageView.setImage(image);
+                this.imagePath = file.getAbsolutePath();
+            }
+
+        });
+        HBox hBox = new HBox(new Node[]{imageView, imageButton});
+        hBox.setAlignment(Pos.TOP_RIGHT);
+        gridPane.add(hBox, 2, 0, 1, 1);
+        Label emailLabel = new Label("Email:");
+        TextField emailField = new TextField();
+        gridPane.add(emailLabel, 0, 6);
+        gridPane.add(emailField, 1, 6);
+        Label passwordLabel = new Label("Password:");
+        PasswordField passwordField = new PasswordField();
+        gridPane.add(passwordLabel, 0, 7);
+        gridPane.add(passwordField, 1, 7);
+        Label userTypeLabel = new Label("User Type:");
+        ToggleGroup userTypeToggleGroup = new ToggleGroup();
+        RadioButton studentRadioButton = new RadioButton("Student");
+        studentRadioButton.setToggleGroup(userTypeToggleGroup);
+        RadioButton lecturerRadioButton = new RadioButton("Lecturer");
+        lecturerRadioButton.setToggleGroup(userTypeToggleGroup);
+        studentRadioButton.setSelected(true);
+        gridPane.add(userTypeLabel, 0, 8);
+        gridPane.add(studentRadioButton, 1, 8);
+        gridPane.add(lecturerRadioButton, 2, 8);
+        Button signupButton = new Button("Sign Up");
+        Label errorMessageLabel = new Label();
+        gridPane.add(errorMessageLabel, 0, 10, 2, 1);
+        Button BackToLogin = new Button("back to login");
+        gridPane.add(BackToLogin, 2, 9, 2, 1);
+        BackToLogin.setOnAction( (e)->{
+            this.primaryStage.setScene(logInScene());
+        });
+        signupButton.setOnAction((event) -> {
+            String firstName = firstNameField.getText();
+            String lastName = lastNameField.getText();
+            boolean gender = maleRadioButton.isSelected()? true : false ;
+            String phone = phoneField.getText();
+            String country = countryField.getText();
+            String email = emailField.getText();
+            String password = passwordField.getText();
+            String userType = studentRadioButton.isSelected()? "student": "lecturer";
+            if (!firstName.isEmpty() && !lastName.isEmpty()  && !phone.isEmpty() && !country.isEmpty() && !email.isEmpty() && !password.isEmpty() && imagePath!=null) {
+              try {
+                  if (userType.equals("student"))  Online_Course_Site.addNewStudent(new Student(firstName,lastName,email,password,phone,imagePath,gender,country));
+                  else Online_Course_Site.addNewLecturer(new Lecturer(firstName,lastName,email,password,phone,imagePath,gender,country));
+                  imagePath=null;
+                  this.primaryStage.setScene(logInScene());
+                  for (Student s : Online_Course_Site.getStudents()){
+                      s.displayInfo();
+                  }
+                  for (Lecturer s : Online_Course_Site.getLecturers()){
+                      s.displayInfo();
+                  }
+
+              }catch (Exception e){
+                  errorMessageLabel.setText(e.getMessage());
+                  errorMessageLabel.setTextFill(Color.RED);
+              }
+            } else {
+
+                errorMessageLabel.setText("Please fill in all the required fields.");
+                errorMessageLabel.setTextFill(Color.RED);
+            }
+        });
+        gridPane.add(signupButton, 1, 9);
+
+        Scene scene =new Scene(gridPane, 480, 450.0);
+
+        scene.getStylesheets().add(getClass().getResource("login.css").toExternalForm());
+
+        return  scene ;
     }
     private Scene mainAppForStudentScene(){
         this.primaryStage.setTitle("ONLINE COURSE SITE");
@@ -237,14 +358,12 @@ private Scene logInScene() {
              {
 
                  try {
-                     if(newEmailField.getText().length()>0){
-                         Online_Course_Site.loginUser.setEmail(newEmailField.getText());
-                     }
-                     if(newPasswordField.getText().length()>0){
-                         Online_Course_Site.loginUser.setPassword(newPasswordField.getText());
-                     }
 
-                     this.primaryStage.setScene(logInScene());
+                     Online_Course_Site.loginUser.setEmail(newEmailField.getText());
+                     Online_Course_Site.loginUser.setPassword(newPasswordField.getText());
+
+                      this.primaryStage.setScene(logInScene());
+
 
 
                  }catch(IllegalArgumentException e) {
@@ -280,12 +399,10 @@ private Scene logInScene() {
              alert.showAndWait();
 
              if (alert.getResult() == ButtonType.OK) {
-                 Online_Course_Site.deleteStudent(Online_Course_Site.loginUser.getId());// put the student
-                 for(Student S : Online_Course_Site.getStudents()){
-                     System.out.println(S.getEmail());
-                 }
+                 Online_Course_Site.deleteStudent((Student) Online_Course_Site.getLoginUser());// put the student
+
                  this.primaryStage.setScene(logInScene());
-                 Online_Course_Site.loginUser.displayInfo();
+
              }
          });
          Scene scene =new Scene(layout,400,500);
