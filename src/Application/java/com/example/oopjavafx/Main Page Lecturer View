@@ -104,7 +104,12 @@ public class HelloApplication extends Application {
         /////////////////////////////////////////
 
         Button Addbtn = new Button("Add Course");
+        Button Removebtn = new Button("Remove Course");
         Button Addconfirm = new Button("Add");
+
+        Label course1Label = new Label("Course 1: Introduction to Java");
+        Label course2Label = new Label("Course 2: Web Development Basics");
+        Label course3Label = new Label("Course 3: Database Management");
 
         courseName.setVisible(false);
         NameOfCourse.setVisible(false);
@@ -132,12 +137,21 @@ public class HelloApplication extends Application {
             lecturer.publicCourse(inputText1, inputText2, inputText5, inputText3);
            // for (int i=0 ; i < lecturer.courses.size())
 
-            showcourses.setText(""+ lecturer.getCourses() );
+            //showcourses.setText(lecturer.getCourses() );
+        }) ;
+
+
+        Removebtn.setOnAction(event -> {
+
+            course3Label.setVisible(false);
+
+
         }) ;
 
 
         courseName.setOnAction(event -> {
             inputText1 = courseName.getText();
+
         });
         courseDescription.setOnAction(event -> {
             inputText2 = courseDescription.getText();
@@ -196,11 +210,11 @@ public class HelloApplication extends Application {
         // Course overview
         VBox courseOverview = new VBox(10);
         courseOverview.setPadding(new Insets(10));
-
-
-
         /*courseOverview.getChildren().addAll();
         root.setRight(courseOverview);*/
+
+
+
 
         // BOTTOM LEFT BUTTONS
         VBox BottomBox1 = new VBox(10);
@@ -224,14 +238,7 @@ public class HelloApplication extends Application {
         //Label RegisterCourse2 = new Label("Register Course: ");
         Box2.setPadding(new Insets(20));
         Box2.setStyle("-fx-background-color: #f0f0f0;");
-
-
-        Label course1Label = new Label("Course 1: Introduction to Java");
-        Label course2Label = new Label("Course 2: Web Development Basics");
-        Label course3Label = new Label("Course 3: Database Management");
-
-
-        Box2.getChildren().addAll( Addbtn ,MyCourse,course1Label, course2Label, course3Label);
+        Box2.getChildren().addAll( Addbtn, Removebtn ,MyCourse,course1Label, course2Label, course3Label);
         root.setCenter(Box2);
 
 
