@@ -31,8 +31,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    String inputText1 , inputText2 , inputText3  ;
-    double inputText5 ;
+
     private double  withdraw  ;
     Stage primaryStage ;
     String imagePath = null;
@@ -40,11 +39,11 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // initial student account
-        Online_Course_Site.addNewStudent(new Student("mahmoud","mostafa","mahmoud2030m@gmail.com","@#$1245Mnss","012441233","\\Users\\asd\\Pictures\\Screenshots\\Screenshot 2024-05-12 131129.png",true,"eg"));
+        Online_Course_Site.addNewStudent(new Student("mahmoud","mostafa","mahmoud2030m@gmail.com","@#$1245Mnss","012441233","https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",true,"eg"));
 
-        Online_Course_Site.addNewLecturer(new Lecturer("asfcdhgv","dewahg","abdo@gmail.com","1#$@45Ab","011","eywg",true,"co"));
+        Online_Course_Site.addNewLecturer(new Lecturer("abdo","ahmed","abdo@gmail.com","@#$1245Mnss","011","https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",true,"co"));
         Online_Course_Site.getLecturers().get(0).publicCourse("AVR","AVRasnf aksbfkasbfkjabsfkabsfkabsf",50,"hsga");
-        Online_Course_Site.addNewStudent(new Student("Omar", "Tamer", "omar@gmail.com", "Omar@000", "01111","eywg",true, "egypt" ));
+        Online_Course_Site.addNewStudent(new Student("Omar", "Tamer", "omar@gmail.com", "Omar@000", "01111","https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",true, "egypt" ));
         Online_Course_Site.getLecturers().get(0).publicCourse("tech","AVRasjfnakjvbadbvkadbvkbadkvabv",50,"hsga");
 
         this.primaryStage=stage;
@@ -367,9 +366,9 @@ private Scene logInScene() {
         withdrawButton.setVisible(false);
         registerButton.setVisible(false);
 //        Image profile = new Image(Online_Course_Site.loginUser.getImage());
-//        ImageView profileImageView = new ImageView(profile);
-//        profileImageView.setFitHeight(50);
-//        profileImageView.setFitWidth(50);
+        ImageView profileImageView = new ImageView(Online_Course_Site.loginUser.getImage());
+        profileImageView.setFitHeight(50);
+        profileImageView.setFitWidth(50);
         charge.setPrefSize(70,30);
         chargebalance.setPrefSize(60,30);
         editButton.setOnAction((e)->{
@@ -388,8 +387,8 @@ private Scene logInScene() {
         Balance.getChildren().addAll(charge, chargebalance);
         HBox info = new HBox(10, new VBox(5, nameLabel, balanceLabel, Balance,alert));
         info.setAlignment(Pos.CENTER);
-//        full.getChildren().addAll(profileImageView, info);
-        full.getChildren().addAll( info);
+        full.getChildren().addAll(profileImageView, info);
+//        full.getChildren().addAll( info);
         full.setPadding(new Insets(20));
         full.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         root.setLeft(full);
@@ -461,49 +460,39 @@ private Scene logInScene() {
     private Scene mainAppForLecturerScene(){
                 Lecturer loggedLecturer = (Lecturer)Online_Course_Site.getLoginUser();
                 BorderPane root = new BorderPane();
-                StackPane root2 = new StackPane();
-                this.primaryStage.setTitle("Online Course System - Lecturer View");
 
+                this.primaryStage.setTitle("Online Course System - Lecturer View");
 
                 root.setPadding(new Insets(10));
 
-
                 Label titleLabel = new Label(" Online Course System - [Lecturer View] ");
                 titleLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-color : Blue; ");
-                titleLabel.setTextFill(Color.BLUEVIOLET);
                 StackPane.setAlignment(titleLabel, Pos.CENTER);
                 BorderPane.setAlignment(titleLabel, Pos.CENTER);
-
                 root.setTop(titleLabel);
 
                 // Sidebar with navigation
                 VBox TopBox1 = new VBox(15);
                 TopBox1.setPrefWidth(200);   // width of the vbox
                 TopBox1.setPadding(new Insets(20));
-                //Button myCoursesBtn = new Button("My Courses");
-                // Button createCourseBtn = new Button("Create Course");
                 TextField balancefield = new TextField();
 
-                Button AddStudent = new Button("Add Student");
-                Button RomoveStudent = new Button("Remove Student");
                 Button WithdrawBalance = new Button("Withdraw");
 
                 ImageView LecturerImage = new ImageView(loggedLecturer.getImage());
+                LecturerImage.setFitHeight(50);
+                LecturerImage.setFitWidth(50);
                 Label LecturerName = new Label("Name: " + loggedLecturer.getFirstName());
                 Label LecturerEmail = new Label("Email: " + loggedLecturer.getEmail());
                 Label LecturerBalance = new Label("Balance: " + loggedLecturer.getBalance() + "$");
                 Label TotalStudent = new Label("Total Student: " + loggedLecturer.getTotalStudent());
                 Label Withdrawlabel = new Label("Withdraw Amount:");
                 Label errorText = new Label();
-                balancefield.setOnAction(event -> {
-                    withdraw = Double.parseDouble(balancefield.getText());
-                    ;
-
-                });
 
                 WithdrawBalance.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
+                        withdraw = Double.parseDouble(balancefield.getText());
                         // Call a method from the existing class when the button is clicked
                         try {
                             loggedLecturer.withDrawMoney(withdraw);
@@ -522,11 +511,10 @@ private Scene logInScene() {
                 TextField coursePrice = new TextField();
                 TextField category = new TextField();
 
-                Label NameOfCourse = new Label("Course Name");
-                Label Description = new Label("Course Description");
-                Label Price = new Label("Course Price");
-                Label Category = new Label("Course Category");
-                Label showcourses = new Label("");
+                Label NameOfCourseLabel = new Label("Course Name");
+                Label DescriptionLabel = new Label("Course Description");
+                Label PriceLabel = new Label("Course Price");
+                Label CategoryLabel = new Label("Course Category");
 
 
                 //////////////////////////////////////////
@@ -534,85 +522,73 @@ private Scene logInScene() {
                 /////////////////////////////////////////
 
                 Button Addbtn = new Button("Add Course");
-                Button Removebtn = new Button("Remove Course");
                 Button Addconfirm = new Button("Add");
 
-                Label course1Label = new Label("Course 1: Introduction to Java");
-                Label course2Label = new Label("Course 2: Web Development Basics");
-                Label course3Label = new Label("Course 3: Database Management");
-
                 courseName.setVisible(false);
-                NameOfCourse.setVisible(false);
+                NameOfCourseLabel.setVisible(false);
                 courseDescription.setVisible(false);
-                Description.setVisible(false);
+                 DescriptionLabel.setVisible(false);
                 coursePrice.setVisible(false);
-                Price.setVisible(false);
+                PriceLabel.setVisible(false);
                 category.setVisible(false);
-                Category.setVisible(false);
+                CategoryLabel.setVisible(false);
                 Addconfirm.setVisible(false);
+                ListView<String> currentCourses = new ListView<>();
 
+
+        for (Course course : loggedLecturer.getCourses()){
+            currentCourses.getItems().addAll( course.getName() +" lecturer name : "+ course.getInstructorName() +" course price : " + course.getPrice()  );
+        }
 
                 Addbtn.setOnAction(event -> {
 
                     courseName.setVisible(true);
-                    NameOfCourse.setVisible(true);
+                    NameOfCourseLabel.setVisible(true);
                     courseDescription.setVisible(true);
-                    Description.setVisible(true);
+                    DescriptionLabel.setVisible(true);
                     coursePrice.setVisible(true);
-                    Price.setVisible(true);
+                    PriceLabel.setVisible(true);
                     category.setVisible(true);
-                    Category.setVisible(true);
+                    CategoryLabel.setVisible(true);
                     Addconfirm.setVisible(true);
 
-                    loggedLecturer.publicCourse(inputText1, inputText2, inputText5, inputText3);
+
+
                     // for (int i=0 ; i < lecturer.courses.size())
 
-                    //showcourses.setText(lecturer.getCourses() );
                 });
 
 
-                Removebtn.setOnAction(event -> {
 
-                    course3Label.setVisible(false);
-
-
-                });
-
-
-                courseName.setOnAction(event -> {
-                    inputText1 = courseName.getText();
-
-                });
-                courseDescription.setOnAction(event -> {
-                    inputText2 = courseDescription.getText();
-                });
-                coursePrice.setOnAction(event -> {
-                    inputText5 = Double.parseDouble(balancefield.getText());
-                    ;
-                });
-        /*instructorName.setOnAction(event -> {
-            inputText3 = instructorName.getText();
-        });*/
-                category.setOnAction(event -> {
-                    inputText3 = category.getText();
-                });
 
                 Addconfirm.setOnAction(event -> {
+                    String name = courseName.getText();
+                    String description  = courseDescription.getText();
+                    double price = Double.parseDouble(balancefield.getText());
+                    String categoryText = category.getText();
 
                     courseName.setVisible(false);
-                    NameOfCourse.setVisible(false);
+                    NameOfCourseLabel.setVisible(false);
                     courseDescription.setVisible(false);
-                    Description.setVisible(false);
+                    DescriptionLabel.setVisible(false);
                     coursePrice.setVisible(false);
-                    Price.setVisible(false);
+                    PriceLabel.setVisible(false);
                     category.setVisible(false);
-                    Category.setVisible(false);
+                    CategoryLabel.setVisible(false);
                     Addconfirm.setVisible(false);
+                    try {
+                        loggedLecturer.publicCourse(name, description, price, categoryText);
+                    }catch (Exception e){
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText("Error");
+                        alert.setContentText(e.getMessage());
+                        alert.showAndWait();
 
-                    loggedLecturer.publicCourse(inputText1, inputText2, inputText5, inputText3);
-                    // for (int i=0 ; i < lecturer.courses.size())
+                    }
 
-                    showcourses.setText("" + loggedLecturer.getCourses());
+                        currentCourses.getItems().addAll( name +" lecturer name : "+ loggedLecturer.getFirstName() +" course price : " + price );
+
                 });
 
 
@@ -626,13 +602,13 @@ private Scene logInScene() {
                         WithdrawBalance,
                         errorText,
                         TotalStudent,
-                        NameOfCourse,
+                        NameOfCourseLabel,
                         courseName,
-                        Description,
+                        DescriptionLabel,
                         courseDescription,
-                        Price,
+                        PriceLabel,
                         coursePrice,
-                        Category,
+                        CategoryLabel,
                         category,
                         Addconfirm);
 
@@ -645,29 +621,41 @@ private Scene logInScene() {
 
 
 
-        /*courseOverview.getChildren().addAll();
-        root.setRight(courseOverview);*/
 
                 // BOTTOM LEFT BUTTONS
-                VBox BottomBox1 = new VBox(10);
+                HBox BottomBox1 = new HBox(10);
                 BottomBox1.setPadding(new Insets(20));
-                BottomBox1.setStyle("-fx-background-color: #f0f0f0;");
+                BottomBox1.setLayoutX(200);
+                BottomBox1.setLayoutY(400);
                 Button logoutBtn = new Button("Logout");
-                Button editbutton = new Button("Edit");
-                BottomBox1.getChildren().addAll(editbutton, logoutBtn);
-                root.setBottom(BottomBox1);
+                logoutBtn.setOnAction((e)->{
+                    Online_Course_Site.logOut();
+                    this.primaryStage.setScene(logInScene());
+                });
 
-                VBox Box2 = new VBox(80);
+                Button editbutton = new Button("Edit");
+                editbutton.setOnAction((e)->{
+                    this.primaryStage.setScene(editScene());
+                });
+                BottomBox1.getChildren().addAll(editbutton, logoutBtn);
+                //root.setBottom(BottomBox1);
+
+                VBox Box2 = new VBox(40);
                 Box2.setPrefWidth(400);
                 Label MyCourse = new Label("My Cousres: ");
                 //Label RegisterCourse2 = new Label("Register Course: ");
                 Box2.setPadding(new Insets(20));
                 Box2.setStyle("-fx-background-color: #f0f0f0;");
-                Box2.getChildren().addAll(Addbtn, Removebtn, MyCourse, course1Label, course2Label, course3Label);
+
+
+
+        Box2.getChildren().addAll(Addbtn, MyCourse, currentCourses,BottomBox1);
                 root.setCenter(Box2);
 
 
                 Scene scene = new Scene(root, 1500, 780);
+                scene.getStylesheets().add(getClass().getResource("main.css").toExternalForm());
+                logoutBtn.getStyleClass().add("info");
                 return scene;
 
 
