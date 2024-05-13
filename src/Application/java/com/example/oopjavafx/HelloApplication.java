@@ -30,6 +30,8 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.text.html.ListView;
+
 public class HelloApplication extends Application {
 
     private double  withdraw  ;
@@ -45,6 +47,9 @@ public class HelloApplication extends Application {
         Online_Course_Site.getLecturers().get(0).publicCourse("AVR","AVRasnf aksbfkasbfkjabsfkabsfkabsf",50,"hsga");
         Online_Course_Site.addNewStudent(new Student("Omar", "Tamer", "omar@gmail.com", "Omar@000", "01111","https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",true, "egypt" ));
         Online_Course_Site.getLecturers().get(0).publicCourse("tech","AVRasjfnakjvbadbvkadbvkbadkvabv",50,"hsga");
+        Online_Course_Site.getLecturers().get(0).publicCourse("Design","gdvyasakjvbadbvkadbvkbadkvabv",50,"aaa");
+
+
 
         this.primaryStage=stage;
         // initial login scene
@@ -649,7 +654,7 @@ private Scene logInScene() {
 
 
 
-        Box2.getChildren().addAll(Addbtn, MyCourse, currentCourses,BottomBox1);
+        Box2.getChildren().addAll( MyCourse, currentCourses,BottomBox1);
                 root.setCenter(Box2);
 
 
